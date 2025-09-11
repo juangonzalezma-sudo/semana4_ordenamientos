@@ -1,0 +1,83 @@
+import java.util.Random;
+
+public class Semana04_Ordenamientos {
+
+    //Método main
+    public static void main(String[] args) {
+        timeSort(); //Llamado a la funcion que mide el tiempo
+    }
+
+    //Método que define y ejecuta el ordenamiento burbuja
+    public static void bubbleSort(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int j = 0; j < array.length - 1 - i; j++) {
+                if (array[j] > array[j + 1]) {
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    //Metodo que define y ejecuta el ordenamiento por seleccion
+    public static void selectionSort(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[j] < array[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            int temp = array[i];
+            array[i] = array[minIndex];
+            array[minIndex] = temp;
+        }
+    }
+
+    //Metodo que define y ejecuta el ordenamiento por insercion
+    public static void insertionSort(int[] array) {
+        for (int i = 1; i < array.length; i++) {
+            int key = array[i];
+            int j = i - 1;
+            while (j >= 0 && array[j] > key) {
+                array[j + 1] = array[j];
+                j--;
+            }
+            array[j + 1] = key;
+        }
+    }
+
+    //Metodo que toma el tiempo por cada tipo de ordenamiento.
+    public static void timeSort() {
+        Random random = new Random();
+        int[] original = new int[100];
+        for (int i = 0; i < original.length; i++) {
+            original[i] = random.nextInt(100) + 1;
+        }
+
+        // Ordenamiento burbuja
+        int[] arrayBubble = original.clone();
+        long start = System.nanoTime();
+        bubbleSort(arrayBubble);
+        long end = System.nanoTime();
+        double timeSeconds = (end - start) / 1_000_000_000.0;
+        System.out.printf("Duración del BubbleSort: %.5f s%n", timeSeconds);
+
+        // Ordenamiento por seleccion
+        int[] arraySelection = original.clone();
+        start = System.nanoTime();
+        selectionSort(arraySelection);
+        end = System.nanoTime();
+        timeSeconds = (end - start) / 1_000_000_000.0;
+        System.out.printf("Duración del SelectionSort: %.5f s%n", timeSeconds);
+
+        // Ordenamiento por insercion
+        int[] arrayInsertion = original.clone();
+        start = System.nanoTime();
+        insertionSort(arrayInsertion);
+        end = System.nanoTime();
+        timeSeconds = (end - start) / 1_000_000_000.0;
+        System.out.printf("Duración del InsertionSort: %.5f s%n", timeSeconds);
+    }
+}
